@@ -72,8 +72,17 @@ function fwInitOne(root) {
   svg.appendChild(rim);
   const overlay = root.querySelector('.fw-click-overlay');
   const overlayImg = root.querySelector('.fw-click-image');
+  const loader = root.querySelector('[data-loader]');
   const trackUrl = root.dataset.trackUrl || '';
   const blockId = root.dataset.blockId || '';
+
+  function showLoader() {
+    if (loader) loader.classList.add('active');
+  }
+
+  function hideLoader() {
+    if (loader) loader.classList.remove('active');
+  }
 
   function trackClick(w) {
     if (!trackUrl || !w.note.gid) return;
@@ -88,20 +97,23 @@ function fwInitOne(root) {
       });
       if (navigator.sendBeacon) {
         navigator.sendBeacon(trackUrl, new Blob([payload], { type: 'application/json' }));
+        setTimeout(hideLoader, 1500);
       } else {
         fetch(trackUrl, {
           method: 'POST',
           keepalive: true,
           headers: { 'Content-Type': 'application/json' },
           body: payload,
-        }).catch(() => {});
+        }).then(() => setTimeout(hideLoader, 1500)).catch(() => setTimeout(hideLoader, 1500));
       }
     } catch (e) {
       // Tracking must never block the click-through navigation.
+      setTimeout(hideLoader, 1500);
     }
   }
 
   function animateImage(w){
+      showLoader();
       trackClick(w);
 
       const rect = w.image.getBoundingClientRect();
