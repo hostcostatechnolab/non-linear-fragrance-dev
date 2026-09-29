@@ -97,18 +97,16 @@ function fwInitOne(root) {
       });
       if (navigator.sendBeacon) {
         navigator.sendBeacon(trackUrl, new Blob([payload], { type: 'application/json' }));
-        setTimeout(hideLoader, 1500);
       } else {
         fetch(trackUrl, {
           method: 'POST',
           keepalive: true,
           headers: { 'Content-Type': 'application/json' },
           body: payload,
-        }).then(() => setTimeout(hideLoader, 1500)).catch(() => setTimeout(hideLoader, 1500));
+        }).catch(() => {});
       }
     } catch (e) {
       // Tracking must never block the click-through navigation.
-      setTimeout(hideLoader, 1500);
     }
   }
 
