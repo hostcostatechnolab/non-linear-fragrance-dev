@@ -2,7 +2,7 @@
 
 client_id = "3f43a767f02f177a5384ee6fc2637f96"
 name = "non-linear-fragrance-dev"
-application_url = "https://example.com"
+application_url = "https://non-linear-fragrance-dev.vercel.app"
 embedded = true
 
 [access_scopes]
@@ -77,7 +77,7 @@ type = "single_line_text_field"
   storefront = "public_read"
 
 [app_proxy]
-url = "https://example.com/proxy"
+url = "https://non-linear-fragrance-dev.vercel.app/proxy"
 subpath = "fragrance-wheel"
 prefix = "apps"
 
@@ -97,7 +97,7 @@ api_version = "2026-10"
   topics = [ "app_subscriptions/update" ]
 
 [auth]
-redirect_urls = [ "https://example.com/api/auth" ]
+redirect_urls = [ "https://non-linear-fragrance-dev.vercel.app/api/auth" ]
 
 [build]
 include_config_on_deploy = true
