@@ -14,6 +14,7 @@ export type PlanFeatures = {
   customColors: boolean;
   noteGroups: boolean;
   presets: boolean;
+  templates: boolean;
   analytics: boolean;
   showBadge: boolean;
 };
@@ -25,6 +26,7 @@ export const PLAN_FEATURES: Record<PlanId, PlanFeatures> = {
     customColors: false,
     noteGroups: false,
     presets: false,
+    templates: false,
     analytics: false,
     showBadge: true,
   },
@@ -34,6 +36,7 @@ export const PLAN_FEATURES: Record<PlanId, PlanFeatures> = {
     customColors: false,
     noteGroups: false,
     presets: false,
+    templates: false,
     analytics: false,
     showBadge: false,
   },
@@ -43,6 +46,7 @@ export const PLAN_FEATURES: Record<PlanId, PlanFeatures> = {
     customColors: true,
     noteGroups: true,
     presets: true,
+    templates: true,
     analytics: true,
     showBadge: false,
   },

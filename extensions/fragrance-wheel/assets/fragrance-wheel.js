@@ -84,6 +84,13 @@ function fwInitOne(root) {
     if (loader) loader.classList.remove('active');
   }
 
+  // Back-button restores from bfcache would otherwise keep the loader up.
+  window.addEventListener('pageshow', evt => {
+    if (!evt.persisted) return;
+    hideLoader();
+    if (overlay) overlay.classList.remove('active');
+  });
+
   function trackClick(w) {
     if (!trackUrl || !w.note.gid) return;
     try {

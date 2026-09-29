@@ -1,5 +1,11 @@
+import { useEffect } from "react";
 import type { HeadersFunction, LoaderFunctionArgs } from "react-router";
-import { Outlet, useLoaderData, useRouteError } from "react-router";
+import {
+  Outlet,
+  useLoaderData,
+  useNavigation,
+  useRouteError,
+} from "react-router";
 import { boundary } from "@shopify/shopify-app-react-router/server";
 import { AppProvider } from "@shopify/shopify-app-react-router/react";
 
@@ -27,10 +33,40 @@ export default function App() {
           <s-link href="/app/note-groups">Note Groups</s-link>
         )}
         {plan === "pro" && <s-link href="/app/analytics">Analytics</s-link>}
+        {plan === "pro" && <s-link href="/app/templates">Templates</s-link>}
         <s-link href="/app/settings">Plan</s-link>
       </s-app-nav>
+      <PageLoader />
       <Outlet />
     </AppProvider>
+  );
+}
+
+function PageLoader() {
+  const navigation = useNavigation();
+  const isLoading = navigation.state === "loading";
+
+  useEffect(() => {
+    window.shopify?.loading(isLoading);
+  }, [isLoading]);
+
+  if (!isLoading) return null;
+
+  return (
+    <div
+      style={{
+        position: "fixed",
+        inset: 0,
+        zIndex: 1000,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        background: "rgba(241, 241, 241, 0.7)",
+      }}
+      aria-busy="true"
+    >
+      <s-spinner accessibilityLabel="Loading page" size="large" />
+    </div>
   );
 }
 

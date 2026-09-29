@@ -119,6 +119,7 @@ export default function FragranceNotesIndex() {
       updated: "Fragrance note updated",
       deleted: "Fragrance note deleted",
       limit: "Note limit reached for your plan",
+      templated: "Template applied",
     };
     const flag = Object.keys(messages).find((key) => searchParams.get(key));
     if (flag) {
