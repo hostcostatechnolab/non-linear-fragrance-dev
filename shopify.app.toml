@@ -1,0 +1,104 @@
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
+
+client_id = "3f43a767f02f177a5384ee6fc2637f96"
+name = "non-linear-fragrance-dev"
+application_url = "https://example.com"
+embedded = true
+
+[access_scopes]
+# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
+scopes = "write_metaobjects,write_metaobject_definitions,write_files"
+
+[metaobjects.app.fragrance_note]
+name = "Fragrance Note"
+description = "A fragrance note rendered by the Fragrance Evolution Wheel"
+
+  [metaobjects.app.fragrance_note.access]
+  admin = "merchant_read_write"
+  storefront = "public_read"
+
+[metaobjects.app.fragrance_note.fields.label]
+name = "Label"
+type = "single_line_text_field"
+required = true
+
+[metaobjects.app.fragrance_note.fields.image]
+name = "Image"
+type = "file_reference"
+
+[metaobjects.app.fragrance_note.fields.link]
+name = "Link"
+type = "url"
+
+[metaobjects.app.fragrance_note.fields.pct_0h]
+name = "Strength at 0H"
+type = "number_integer"
+
+[metaobjects.app.fragrance_note.fields.pct_1h]
+name = "Strength at 1H"
+type = "number_integer"
+
+[metaobjects.app.fragrance_note.fields.pct_2h]
+name = "Strength at 2H"
+type = "number_integer"
+
+[metaobjects.app.fragrance_note.fields.pct_6h]
+name = "Strength at 6H"
+type = "number_integer"
+
+[metaobjects.app.fragrance_note.fields.pct_12h]
+name = "Strength at 12H"
+type = "number_integer"
+
+[metaobjects.app.fragrance_note.fields.group]
+name = "Group"
+type = "metaobject_reference<$app:fragrance_note_group>"
+
+[metaobjects.app.fragrance_note_group]
+name = "Fragrance Note Group"
+description = "A named set of fragrance notes for a specific page"
+display_name_field = "name"
+
+  [metaobjects.app.fragrance_note_group.access]
+  admin = "merchant_read_write"
+  storefront = "public_read"
+
+[metaobjects.app.fragrance_note_group.fields.name]
+name = "Name"
+type = "single_line_text_field"
+required = true
+
+[shop.metafields.app.plan]
+name = "Fragrance Wheel plan"
+description = "Mirrors the shop's Non-Linear Fragrance plan so the theme block can gate features at render time"
+type = "single_line_text_field"
+
+  [shop.metafields.app.plan.access]
+  storefront = "public_read"
+
+[app_proxy]
+url = "https://example.com/proxy"
+subpath = "fragrance-wheel"
+prefix = "apps"
+
+[webhooks]
+api_version = "2026-10"
+
+  [[webhooks.subscriptions]]
+  uri = "/webhooks/app/uninstalled"
+  topics = [ "app/uninstalled" ]
+
+  [[webhooks.subscriptions]]
+  uri = "/webhooks/app/scopes_update"
+  topics = [ "app/scopes_update" ]
+
+  [[webhooks.subscriptions]]
+  uri = "/webhooks/app_subscriptions/update"
+  topics = [ "app_subscriptions/update" ]
+
+[auth]
+redirect_urls = [ "https://example.com/api/auth" ]
+
+[build]
+include_config_on_deploy = true
+automatically_update_urls_on_dev = true

@@ -1,0 +1,166 @@
+{%- comment -%}
+  Fragrance Evolution Wheel (app block)
+{%- endcomment -%}
+
+{%- comment -%}
+  App-owned metaobject types are namespaced per-app as "app--<app id>--<type>"
+  when read from a theme; the App ID below is fixed for this app (Non-Linear
+  Fragrance) across every store that installs it, so this key never changes.
+{%- endcomment -%}
+{%- assign fragrance_note_type = 'app--424518975489--fragrance_note' -%}
+
+{%- comment -%}
+  Resolve the shop's plan, mirrored into an app metafield by the backend.
+  The exact Liquid access path for an app-owned shop metafield can resolve
+  under either form depending on theme engine version, so both are tried.
+{%- endcomment -%}
+{%- assign fw_plan = 'free' -%}
+{%- if shop.metafields.app.plan.value != blank -%}
+  {%- assign fw_plan = shop.metafields.app.plan.value -%}
+{%- elsif shop.metafields['app--424518975489'].plan.value != blank -%}
+  {%- assign fw_plan = shop.metafields['app--424518975489'].plan.value -%}
+{%- endif -%}
+{%- assign fw_is_pro = false -%}
+{%- if fw_plan == 'pro' -%}{%- assign fw_is_pro = true -%}{%- endif -%}
+{%- assign fw_can_label = false -%}
+{%- if fw_plan == 'starter' or fw_plan == 'pro' -%}{%- assign fw_can_label = true -%}{%- endif -%}
+{%- assign fw_max_notes = 0 -%}
+{%- if fw_plan == 'free' -%}
+  {%- assign fw_max_notes = 5 -%}
+{%- elsif fw_plan == 'starter' -%}
+  {%- assign fw_max_notes = 10 -%}
+{%- endif -%}
+
+{%- comment -%}
+  Group filtering is Pro-only; on any other plan the filter is ignored
+  entirely (even if a group was picked while the shop was previously on
+  Pro), so a downgrade can't leave old per-page curation silently active.
+{%- endcomment -%}
+{%- assign fw_group_handle = '' -%}
+{%- if fw_is_pro and block.settings.note_group != blank -%}
+  {%- assign fw_group_handle = block.settings.note_group.system.handle -%}
+{%- endif -%}
+
+{%- assign note_jsons = '' -%}
+{%- assign fw_note_count = 0 -%}
+{%- assign fw_key_counter = 0 -%}
+{%- for note in metaobjects[fragrance_note_type].values -%}
+  {%- if fw_group_handle != blank and note.group.value.system.handle != fw_group_handle -%}
+    {%- continue -%}
+  {%- endif -%}
+  {%- if fw_max_notes > 0 and fw_note_count >= fw_max_notes -%}
+    {%- break -%}
+  {%- endif -%}
+  {%- assign fw_note_count = fw_note_count | plus: 1 -%}
+  {%- assign fw_key_counter = fw_key_counter | plus: 1 -%}
+  {%- assign img_url = '' -%}
+  {%- if note.image.value -%}
+    {%- assign img_url = note.image.value | image_url: width: 800 -%}
+  {%- endif -%}
+  {%- capture note_json -%}
+    {"key":{{ fw_key_counter | json }},"label":{{ note.label.value | json }},"img":{{ img_url | json }},"url":{{ note.link.value | json }},"gid":{{ note.system.id | json }},"handle":{{ note.system.handle | json }},"group":{{ note.group.value.system.id | json }},"groupLabel":{{ note.group.value.name.value | json }},"weights":{"0h":{{ note.pct_0h.value }},"1h":{{ note.pct_1h.value }},"2h":{{ note.pct_2h.value }},"6h":{{ note.pct_6h.value }},"12h":{{ note.pct_12h.value }}}}
+  {%- endcapture -%}
+  {%- assign note_jsons = note_jsons | append: note_json | append: '|SPLIT|' -%}
+{%- endfor -%}
+{%- assign note_list = note_jsons | split: '|SPLIT|' -%}
+{%- assign joined_notes = note_list | join: ',' -%}
+{%- assign notes_json = '[' | append: joined_notes | append: ']' -%}
+
+{{ 'fragrance-wheel.css' | asset_url | stylesheet_tag }}
+
+{%- capture fw_style -%}
+  {%- if fw_is_pro -%}
+    {%- if block.settings.color_bg != blank -%}--fw-bg:{{ block.settings.color_bg }};{%- endif -%}
+    {%- if block.settings.color_ink != blank -%}--fw-ink:{{ block.settings.color_ink }};{%- endif -%}
+    {%- if block.settings.color_muted != blank -%}--fw-muted:{{ block.settings.color_muted }};{%- endif -%}
+    {%- if block.settings.color_accent != blank -%}--fw-accent:{{ block.settings.color_accent }};{%- endif -%}
+    {%- if block.settings.color_line != blank -%}--fw-line:{{ block.settings.color_line }};{%- endif -%}
+  {%- endif -%}
+{%- endcapture -%}
+
+<div
+  class="fragrance-wheel-section"
+  id="fragrance-wheel-{{ block.id }}"
+  data-fragrance-wheel
+  data-plan="{{ fw_plan }}"
+  data-block-id="{{ block.id }}"
+  data-track-url="{% if fw_is_pro %}/apps/fragrance-wheel/track{% endif %}"
+  {%- if fw_style != blank %} style="{{ fw_style }}"{% endif -%}
+>
+  {%- if block.settings.heading != blank -%}
+    <h2 class="fw-heading">{{ block.settings.heading }}</h2>
+  {%- endif -%}
+
+  <div class="fw-wheel-wrap">
+    <svg class="fw-wheel" viewBox="0 0 400 400" role="img" aria-label="{{ block.settings.heading | default: 'Fragrance evolution wheel' }}" data-wheel></svg>
+  </div>
+
+  <div class="fw-timeline">
+    <button class="fw-play-btn" type="button" data-play aria-label="Play fragrance evolution">
+      <svg class="fw-icon fw-icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+      <svg class="fw-icon fw-icon-pause" viewBox="0 0 24 24"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+    </button>
+
+    <div class="fw-slider-track" data-slider-track>
+      <div class="fw-slider-fill" data-slider-fill></div>
+      <button class="fw-slider-thumb" type="button" data-slider-thumb aria-label="Seek timeline"></button>
+      <div class="fw-tick" data-progress="0.25" style="left:25%">
+        <span class="fw-tick-dot"></span><span class="fw-tick-label">{%- if fw_can_label and block.settings.tick_label_1 != blank -%}{{ block.settings.tick_label_1 }}{%- else -%}2H{%- endif -%}</span>
+      </div>
+      <div class="fw-tick" data-progress="0.5" style="left:50%">
+        <span class="fw-tick-dot"></span><span class="fw-tick-label">{%- if fw_can_label and block.settings.tick_label_2 != blank -%}{{ block.settings.tick_label_2 }}{%- else -%}4H{%- endif -%}</span>
+      </div>
+      <div class="fw-tick" data-progress="0.75" style="left:75%">
+        <span class="fw-tick-dot"></span><span class="fw-tick-label">{%- if fw_can_label and block.settings.tick_label_3 != blank -%}{{ block.settings.tick_label_3 }}{%- else -%}6H{%- endif -%}</span>
+      </div>
+      <div class="fw-tick" data-progress="1" style="left:100%">
+        <span class="fw-tick-dot"></span><span class="fw-tick-label">{%- if fw_can_label and block.settings.tick_label_4 != blank -%}{{ block.settings.tick_label_4 }}{%- else -%}8H{%- endif -%}</span>
+      </div>
+    </div>
+  </div>
+
+  {%- unless fw_plan == 'starter' or fw_plan == 'pro' -%}
+    <a class="fw-badge" href="https://apps.shopify.com" target="_blank" rel="noopener">Powered by Non-Linear Fragrance</a>
+  {%- endunless -%}
+
+  <script type="application/json" data-notes>{{ notes_json }}</script>
+  <div class="fw-click-overlay">
+      <div class="fw-click-bg"></div>
+      {%- # theme-check-disable RemoteAsset -%}
+      <img class="fw-click-image" src="" alt="" width="1" height="1">
+      {%- # theme-check-enable RemoteAsset -%}
+  </div>
+</div>
+
+<script src="{{ 'fragrance-wheel.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "Fragrance Wheel",
+  "target": "section",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Fragrance Evolution" },
+    { "type": "header", "content": "Timeline labels" },
+    { "type": "paragraph", "content": "Custom labels require the Starter plan or higher." },
+    { "type": "text", "id": "tick_label_1", "label": "Label at 25%", "default": "2H" },
+    { "type": "text", "id": "tick_label_2", "label": "Label at 50%", "default": "4H" },
+    { "type": "text", "id": "tick_label_3", "label": "Label at 75%", "default": "6H" },
+    { "type": "text", "id": "tick_label_4", "label": "Label at 100%", "default": "8H" },
+    { "type": "header", "content": "Colors" },
+    { "type": "paragraph", "content": "Color overrides require the Pro plan." },
+    { "type": "color", "id": "color_bg", "label": "Background" },
+    { "type": "color", "id": "color_ink", "label": "Text" },
+    { "type": "color", "id": "color_muted", "label": "Muted text" },
+    { "type": "color", "id": "color_accent", "label": "Accent" },
+    { "type": "color", "id": "color_line", "label": "Lines" },
+    { "type": "header", "content": "Note group" },
+    { "type": "paragraph", "content": "Choosing a group requires the Pro plan. Leave empty to show all notes." },
+    {
+      "type": "metaobject",
+      "id": "note_group",
+      "label": "Note group",
+      "metaobject_type": "app--424518975489--fragrance_note_group"
+    }
+  ]
+}
+{% endschema %}

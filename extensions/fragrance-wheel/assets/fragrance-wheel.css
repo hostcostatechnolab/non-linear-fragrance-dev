@@ -1,0 +1,231 @@
+.fragrance-wheel-section {
+  --fw-bg: #f7f4ee;
+  --fw-ink: #4a4238;
+  --fw-muted: #a89f8f;
+  --fw-accent: #4f7a5c;
+  --fw-line: #e4ddcf;
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 24px 0;
+  font-family: inherit;
+  color: var(--fw-ink);
+}
+
+.fragrance-wheel-section * {
+  box-sizing: border-box;
+}
+
+.fw-heading {
+  font-size: 20px;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.fw-wheel-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 44px;
+}
+
+.fw-wheel {
+  width: 100%;
+  max-width: 380px;
+  height: auto;
+}
+
+.fw-wedge-image {
+  cursor: pointer;
+}
+
+.fw-wedge-outline {
+  fill: none;
+  stroke: var(--fw-bg);
+  stroke-width: 5;
+  stroke-linejoin: round;
+}
+
+.fw-wheel-rim {
+  fill: none;
+  stroke: var(--fw-bg);
+  stroke-width: 2;
+}
+
+.fw-wedge-label {
+  font-size: 15px;
+  font-weight: 600;
+  fill: #fff;
+  stroke: rgba(20, 16, 12, 0.55);
+  stroke-width: 3px;
+  stroke-linejoin: round;
+  paint-order: stroke;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.fw-wedge-label.is-visible {
+  opacity: 1;
+}
+
+.fw-timeline {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 0 20px;
+}
+
+.fw-play-btn {
+  position: relative;
+  flex: 0 0 auto;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--fw-ink);
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.fw-play-btn .fw-icon {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+  position: absolute;
+}
+
+.fw-play-btn .fw-icon-pause {
+  display: none;
+}
+
+.fw-play-btn.is-playing .fw-icon-play {
+  display: none;
+}
+
+.fw-play-btn.is-playing .fw-icon-pause {
+  display: block;
+}
+
+.fw-slider-track {
+  position: relative;
+  flex: 1 1 auto;
+  height: 2px;
+  background: var(--fw-line);
+  margin: 0 12px;
+  touch-action: none;
+  cursor: pointer;
+}
+
+.fw-slider-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: var(--fw-ink);
+  width: 0%;
+}
+
+.fw-slider-thumb {
+  position: absolute;
+  top: 50%;
+  left: 0%;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--fw-bg);
+  border: 2px solid var(--fw-ink);
+  transform: translate(-50%, -50%);
+  cursor: grab;
+  padding: 0;
+  touch-action: none;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.fw-slider-thumb:active {
+  cursor: grabbing;
+}
+
+.fw-tick {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: none;
+}
+
+.fw-tick-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--fw-line);
+  margin-top: -2px;
+}
+
+.fw-tick-label {
+  margin-top: 18px;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: var(--fw-muted);
+  white-space: nowrap;
+}
+
+.fw-tick.is-active .fw-tick-dot {
+  background: var(--fw-accent);
+}
+
+.fw-tick.is-active .fw-tick-label {
+  color: var(--fw-accent);
+}
+
+
+.fw-click-overlay{
+    position:fixed;
+    inset:0;
+    z-index:99999;
+    pointer-events:none;
+    opacity:0;
+    transition:.3s;
+}
+.fw-click-overlay.active{
+    opacity:1;
+}
+.fw-click-bg{
+    position:absolute;
+    inset:0;
+    background:#fff;
+    backdrop-filter:blur(20px);
+    opacity:0;
+    transition:all 1s;
+}
+.fw-click-overlay.active .fw-click-bg{
+    opacity:1;
+}
+.fw-click-image{
+    position: fixed;
+    object-fit: cover;
+    border-radius: 50%;
+    right: auto;
+    left: 0;
+    will-change: transform;
+    backface-visibility: hidden;
+    transform: translate3d(0,0,0);
+}
+
+.fw-badge {
+    display: block;
+    text-align: center;
+    margin-top: 16px;
+    font-size: 11px;
+    color: var(--fw-muted);
+    text-decoration: none;
+}
+.fw-badge:hover {
+    text-decoration: underline;
+}
