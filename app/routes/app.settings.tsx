@@ -118,7 +118,7 @@ export default function Settings() {
 
   return (
     <s-page heading="Plan">
-      <s-section heading="Non-Linear Fragrance plan">
+      <s-section heading="Blend Wheel plan">
         <s-stack direction="block" gap="base">
           <s-paragraph>
             You're on the <strong>{PLAN_LABELS[plan]}</strong> plan.
