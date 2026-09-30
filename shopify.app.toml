@@ -2,7 +2,7 @@
 
 client_id = "3f43a767f02f177a5384ee6fc2637f96"
 name = "Blend Wheel"
-application_url = "https://non-linear-fragrance-dev.vercel.app"
+application_url = "https://blendwheel.pinmyplot.com"
 embedded = true
 
 [access_scopes]
@@ -77,7 +77,7 @@ type = "single_line_text_field"
   storefront = "public_read"
 
 [app_proxy]
-url = "https://non-linear-fragrance-dev.vercel.app/proxy"
+url = "https://blendwheel.pinmyplot.com/proxy"
 subpath = "fragrance-wheel"
 prefix = "apps"
 
@@ -101,7 +101,7 @@ api_version = "2026-10"
   compliance_topics = [ "customers/data_request", "customers/redact", "shop/redact" ]
 
 [auth]
-redirect_urls = [ "https://non-linear-fragrance-dev.vercel.app/api/auth" ]
+redirect_urls = [ "https://blendwheel.pinmyplot.com/api/auth" ]
 
 [build]
 automatically_update_urls_on_dev = true
