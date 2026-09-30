@@ -1,7 +1,7 @@
 # Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
 
 client_id = "3f43a767f02f177a5384ee6fc2637f96"
-name = "non-linear-fragrance-dev"
+name = "Blend Wheel"
 application_url = "https://non-linear-fragrance-dev.vercel.app"
 embedded = true
 
@@ -100,5 +100,4 @@ api_version = "2026-10"
 redirect_urls = [ "https://non-linear-fragrance-dev.vercel.app/api/auth" ]
 
 [build]
-include_config_on_deploy = true
 automatically_update_urls_on_dev = true
