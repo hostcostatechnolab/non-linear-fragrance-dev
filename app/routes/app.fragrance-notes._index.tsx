@@ -115,9 +115,9 @@ export default function FragranceNotesIndex() {
 
   useEffect(() => {
     const messages: Record<string, string> = {
-      created: "Fragrance note created",
-      updated: "Fragrance note updated",
-      deleted: "Fragrance note deleted",
+      created: "Note created",
+      updated: "Note updated",
+      deleted: "Note deleted",
       limit: "Note limit reached for your plan",
       templated: "Template applied",
     };
@@ -139,7 +139,7 @@ export default function FragranceNotesIndex() {
   };
 
   return (
-    <s-page heading="Fragrance Notes">
+    <s-page heading="Notes">
       <s-button
         slot="primary-action"
         href={atLimit ? "/app/settings" : "/app/fragrance-notes/new"}
@@ -167,7 +167,7 @@ export default function FragranceNotesIndex() {
         )}
         {notes.length === 0 ? (
           <s-paragraph>
-            No fragrance notes yet. Add your first one to get started.
+            No notes yet. Add your first one to get started.
           </s-paragraph>
         ) : (
           <s-table>

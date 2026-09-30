@@ -50,7 +50,7 @@ export const loader = async ({ request, params }: LoaderFunctionArgs) => {
   const responseJson = await response.json();
   const node = responseJson.data?.metaobject;
   if (!node) {
-    throw new Response("Fragrance note not found", { status: 404 });
+    throw new Response("Note not found", { status: 404 });
   }
 
   const fieldMap: Record<string, MetaobjectField> = {};
@@ -167,7 +167,7 @@ export default function EditFragranceNote() {
   };
 
   return (
-    <s-page heading="Edit fragrance note">
+    <s-page heading="Edit note">
       <form onSubmit={handleSubmit}>
         <s-section>
           <s-stack direction="block" gap="base">

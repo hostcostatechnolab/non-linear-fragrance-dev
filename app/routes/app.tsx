@@ -28,7 +28,7 @@ export default function App() {
     <AppProvider embedded apiKey={apiKey}>
       <s-app-nav>
         <s-link href="/app">Home</s-link>
-        <s-link href="/app/fragrance-notes">Fragrance Notes</s-link>
+        <s-link href="/app/fragrance-notes">Notes</s-link>
         {plan === "pro" && (
           <s-link href="/app/note-groups">Note Groups</s-link>
         )}

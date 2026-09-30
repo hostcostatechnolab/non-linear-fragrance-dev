@@ -1,5 +1,5 @@
 {%- comment -%}
-  Fragrance Evolution Wheel (app block)
+  Blend Wheel (app block)
 {%- endcomment -%}
 
 {%- comment -%}
@@ -92,11 +92,11 @@
   {%- endif -%}
 
   <div class="fw-wheel-wrap">
-    <svg class="fw-wheel" viewBox="0 0 400 400" role="img" aria-label="{{ block.settings.heading | default: 'Fragrance evolution wheel' }}" data-wheel></svg>
+    <svg class="fw-wheel" viewBox="0 0 400 400" role="img" aria-label="{{ block.settings.heading | default: 'Blend evolution wheel' }}" data-wheel></svg>
   </div>
 
   <div class="fw-timeline">
-    <button class="fw-play-btn" type="button" data-play aria-label="Play fragrance evolution">
+    <button class="fw-play-btn" type="button" data-play aria-label="Play blend evolution">
       <svg class="fw-icon fw-icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
       <svg class="fw-icon fw-icon-pause" viewBox="0 0 24 24"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
     </button>
@@ -144,7 +144,7 @@
   "name": "Blend Wheel",
   "target": "section",
   "settings": [
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Fragrance Evolution" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Blend Evolution" },
     { "type": "header", "content": "Timeline labels" },
     { "type": "paragraph", "content": "Custom labels require the Starter plan or higher." },
     { "type": "text", "id": "tick_label_1", "label": "Label at 25%", "default": "2H" },

@@ -10,8 +10,8 @@ embedded = true
 scopes = "write_metaobjects,write_metaobject_definitions,write_files"
 
 [metaobjects.app.fragrance_note]
-name = "Fragrance Note"
-description = "A fragrance note rendered by the Fragrance Evolution Wheel"
+name = "Blend Note"
+description = "A note (scent, flavor or ingredient) shown on the Blend Wheel"
 
   [metaobjects.app.fragrance_note.access]
   admin = "merchant_read_write"
@@ -55,8 +55,8 @@ name = "Group"
 type = "metaobject_reference<$app:fragrance_note_group>"
 
 [metaobjects.app.fragrance_note_group]
-name = "Fragrance Note Group"
-description = "A named set of fragrance notes for a specific page"
+name = "Blend Note Group"
+description = "A named set of notes for a specific page"
 display_name_field = "name"
 
   [metaobjects.app.fragrance_note_group.access]
@@ -69,8 +69,8 @@ type = "single_line_text_field"
 required = true
 
 [shop.metafields.app.plan]
-name = "Fragrance Wheel plan"
-description = "Mirrors the shop's Non-Linear Fragrance plan so the theme block can gate features at render time"
+name = "Blend Wheel plan"
+description = "Mirrors the shop's Blend Wheel plan so the theme block can gate features at render time"
 type = "single_line_text_field"
 
   [shop.metafields.app.plan.access]

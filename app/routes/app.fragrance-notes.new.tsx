@@ -112,7 +112,7 @@ export default function NewFragranceNote() {
   };
 
   return (
-    <s-page heading="Add fragrance note">
+    <s-page heading="Add note">
       <form onSubmit={handleSubmit}>
         <s-section>
           <s-stack direction="block" gap="base">

@@ -121,7 +121,7 @@ export default function Analytics() {
 
           {totalClicks === 0 ? (
             <s-paragraph>
-              Add the Fragrance Wheel block to a page and clicks will appear
+              Add the Blend Wheel block to a page and clicks will appear
               here.
             </s-paragraph>
           ) : (
