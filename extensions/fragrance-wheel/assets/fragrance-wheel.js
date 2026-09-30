@@ -300,11 +300,11 @@ function fwInitOne(root) {
     return result;
   }
 
-  function powerCell(i, powers) {
+  function powerCell(i, powers, active) {
     let poly = BOUNDARY;
     const si = seeds[i];
     for (let j = 0; j < seeds.length; j++) {
-      if (j === i || poly.length === 0) continue;
+      if (j === i || !active[j] || poly.length === 0) continue;
       const sj = seeds[j];
       const dx = sj.x - si.x;
       const dy = sj.y - si.y;
@@ -336,12 +336,17 @@ function fwInitOne(root) {
   function computeCells(weights) {
     const total = NOTES.reduce((sum, n) => sum + (weights[n.key] || 0), 0) || 1;
     const targetFrac = NOTES.map(n => (weights[n.key] || 0) / total);
+    // A note at (or near) 0% is left out entirely: fitting it toward zero
+    // never converges and leaves a hairline sliver that reads as a crack.
+    const active = targetFrac.map(f => f > 0.002);
+    active.forEach((on, i) => { if (!on) powers[i] = 0; });
     let cells = [];
     for (let iter = 0; iter < FIT_ITERATIONS; iter++) {
-      cells = NOTES.map((_, i) => powerCell(i, powers));
+      cells = NOTES.map((_, i) => (active[i] ? powerCell(i, powers, active) : []));
       const areas = cells.map(polygonArea);
       const totalArea = areas.reduce((a, b) => a + b, 0) || 1;
       for (let i = 0; i < NOTES.length; i++) {
+        if (!active[i]) continue;
         const err = targetFrac[i] - areas[i] / totalArea;
         powers[i] += LEARNING_RATE * err;
       }
