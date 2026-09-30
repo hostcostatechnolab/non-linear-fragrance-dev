@@ -239,14 +239,16 @@ export default function Templates() {
                   />
                 </s-table-cell>
                 <s-table-cell>
-                  <s-text-field
-                    label="Name"
-                    labelAccessibilityVisibility="exclusive"
-                    value={note.label}
-                    onInput={(event: Event) =>
-                      updateNote(index, { label: (event.target as HTMLInputElement).value })
-                    }
-                  />
+                  <div style={{ minWidth: 170 }}>
+                    <s-text-field
+                      label="Name"
+                      labelAccessibilityVisibility="exclusive"
+                      value={note.label}
+                      onInput={(event: Event) =>
+                        updateNote(index, { label: (event.target as HTMLInputElement).value })
+                      }
+                    />
+                  </div>
                 </s-table-cell>
                 {note.pcts.map((pct, stage) => (
                   <s-table-cell key={stage}>
