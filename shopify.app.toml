@@ -96,6 +96,10 @@ api_version = "2026-10"
   uri = "/webhooks/app_subscriptions/update"
   topics = [ "app_subscriptions/update" ]
 
+  [[webhooks.subscriptions]]
+  uri = "/webhooks/compliance"
+  compliance_topics = [ "customers/data_request", "customers/redact", "shop/redact" ]
+
 [auth]
 redirect_urls = [ "https://non-linear-fragrance-dev.vercel.app/api/auth" ]
 
