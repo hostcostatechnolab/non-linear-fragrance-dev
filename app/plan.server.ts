@@ -24,8 +24,10 @@ export function billingPlanName(
   return PLAN_TO_BILLING_NAME[plan] as typeof STARTER_PLAN | typeof PRO_PLAN;
 }
 
+// Real charges are opt-in: NODE_ENV is always "production" on Vercel, so it
+// can't distinguish a dev-store deployment from a live App Store launch.
 export function isTestMode(): boolean {
-  return process.env.NODE_ENV !== "production";
+  return process.env.BILLING_LIVE !== "true";
 }
 
 export async function getPlan(shop: string): Promise<PlanId> {
