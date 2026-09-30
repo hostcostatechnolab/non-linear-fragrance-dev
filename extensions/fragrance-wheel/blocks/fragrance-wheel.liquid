@@ -105,16 +105,16 @@
       <div class="fw-slider-fill" data-slider-fill></div>
       <button class="fw-slider-thumb" type="button" data-slider-thumb aria-label="Seek timeline"></button>
       <div class="fw-tick" data-progress="0.25" style="left:25%">
-        <span class="fw-tick-dot"></span><span class="fw-tick-label">{%- if fw_can_label and block.settings.tick_label_1 != blank -%}{{ block.settings.tick_label_1 }}{%- else -%}2H{%- endif -%}</span>
+        <span class="fw-tick-dot"></span><span class="fw-tick-label">{%- if fw_can_label and block.settings.tick_label_1 != blank -%}{{ block.settings.tick_label_1 }}{%- else -%}1H{%- endif -%}</span>
       </div>
       <div class="fw-tick" data-progress="0.5" style="left:50%">
-        <span class="fw-tick-dot"></span><span class="fw-tick-label">{%- if fw_can_label and block.settings.tick_label_2 != blank -%}{{ block.settings.tick_label_2 }}{%- else -%}4H{%- endif -%}</span>
+        <span class="fw-tick-dot"></span><span class="fw-tick-label">{%- if fw_can_label and block.settings.tick_label_2 != blank -%}{{ block.settings.tick_label_2 }}{%- else -%}2H{%- endif -%}</span>
       </div>
       <div class="fw-tick" data-progress="0.75" style="left:75%">
         <span class="fw-tick-dot"></span><span class="fw-tick-label">{%- if fw_can_label and block.settings.tick_label_3 != blank -%}{{ block.settings.tick_label_3 }}{%- else -%}6H{%- endif -%}</span>
       </div>
       <div class="fw-tick" data-progress="1" style="left:100%">
-        <span class="fw-tick-dot"></span><span class="fw-tick-label">{%- if fw_can_label and block.settings.tick_label_4 != blank -%}{{ block.settings.tick_label_4 }}{%- else -%}8H{%- endif -%}</span>
+        <span class="fw-tick-dot"></span><span class="fw-tick-label">{%- if fw_can_label and block.settings.tick_label_4 != blank -%}{{ block.settings.tick_label_4 }}{%- else -%}12H{%- endif -%}</span>
       </div>
     </div>
   </div>
@@ -147,10 +147,10 @@
     { "type": "text", "id": "heading", "label": "Heading", "default": "Blend Evolution" },
     { "type": "header", "content": "Timeline labels" },
     { "type": "paragraph", "content": "Custom labels require the Starter plan or higher." },
-    { "type": "text", "id": "tick_label_1", "label": "Label at 25%", "default": "2H" },
-    { "type": "text", "id": "tick_label_2", "label": "Label at 50%", "default": "4H" },
+    { "type": "text", "id": "tick_label_1", "label": "Label at 25%", "default": "1H" },
+    { "type": "text", "id": "tick_label_2", "label": "Label at 50%", "default": "2H" },
     { "type": "text", "id": "tick_label_3", "label": "Label at 75%", "default": "6H" },
-    { "type": "text", "id": "tick_label_4", "label": "Label at 100%", "default": "8H" },
+    { "type": "text", "id": "tick_label_4", "label": "Label at 100%", "default": "12H" },
     { "type": "header", "content": "Colors" },
     { "type": "paragraph", "content": "Color overrides require the Pro plan." },
     { "type": "color", "id": "color_bg", "label": "Background" },
